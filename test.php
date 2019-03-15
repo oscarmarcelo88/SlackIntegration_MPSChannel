@@ -29,7 +29,7 @@ foreach ($data_decode['posts'] as $value)
     if (date("Y-m-d\TH:i:s.000\Z", $time_between_posts) < $value['created_at'] && $value['comment_count'] == 0) //Post in the last 2 days and with no comments
     {
         $value['details']= str_replace("'","",$value['details']); //remove the ' from the text
-        $value['details']= substr($value['details'], 0, 1200); //just show the first 1200 chars to avoid long messages
+        $value['details']= substr($value['details'], 0, 1200);
         $messageDataSend = "{
        'text': '*".strip_tags($value['title'])."*\n".strip_tags($value['details'])."',
        'username': 'MPS_Forum',
@@ -49,8 +49,8 @@ foreach ($data_decode['posts'] as $value)
         }";
 
         //$url = "https://hooks.slack.com/services/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"; //testisky general
-        //$url = "https://hooks.slack.com/services/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"; //mps-questions channel
-        $url = "https://hooks.slack.com/services/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"; //#General of MPS channel
+        $url = "https://hooks.slack.com/services/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"; //mps-questions channel
+        //$url = "https://hooks.slack.com/services/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"; //#General of MPS channel
 
         $ch2 = curl_init($url);
 
