@@ -7,6 +7,9 @@
  * Time: 10:39
  */
 
+require 'config.php'; //bring tokens
+
+
 //Curl service to fetch the questions from the forum
 $ch = curl_init();
 
@@ -21,7 +24,7 @@ $data_decode = json_decode($data, true);
 //var_dump($data_decode);
 
 date_default_timezone_set('Iceland'); // Set the time of the server of the Forum
-$time_between_posts = strtotime("-1 days");
+$time_between_posts = strtotime("-1 days"); // With this variable you can check the number of days ago of the posts
 
 
 foreach ($data_decode['posts'] as $value)
@@ -30,7 +33,7 @@ foreach ($data_decode['posts'] as $value)
     {
         $value['details']= str_replace("'","",$value['details']); //remove the ' from the text
         $value['title']= str_replace("'","",$value['title']); //remove the ' from the title
-
+        var_dump($value['details']);
         $value['details']= substr($value['details'], 0, 1200); //just show the first 1200 chars to avoid long messages
         $messageDataSend = "{
        'text': '*".strip_tags($value['title'])."*\n".strip_tags($value['details'])."',
@@ -50,11 +53,7 @@ foreach ($data_decode['posts'] as $value)
           ]
         }";
 
-        //$url = "https://hooks.slack.com/services/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"; //testisky general
-        //$url = "https://hooks.slack.com/services/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"; //mps-questions channel
-        $url = "https://hooks.slack.com/services/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"; //#General of MPS channel
-
-        $ch2 = curl_init($url);
+        $ch2 = curl_init($url_mpsCommunity_General);
 
         curl_setopt($ch2, CURLOPT_POST, 1);
         curl_setopt($ch2, CURLOPT_POSTFIELDS, $messageDataSend);

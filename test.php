@@ -7,6 +7,8 @@
  * Time: 10:39
  */
 
+require 'config.php'; //bring the tokens
+
 //Curl service to fetch the questions from the forum
 $ch = curl_init();
 
@@ -49,12 +51,8 @@ foreach ($data_decode['posts'] as $value)
             }
           ]
         }";
-        //var_dump($messageDataSend); for testing
-        //$url = "https://hooks.slack.com/services/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"; //testisky general
-        $url = "https://hooks.slack.com/services/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"; //mps-questions channel
-        //$url = "https://hooks.slack.com/services/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"; //#General of MPS channel
 
-        $ch2 = curl_init($url);
+        $ch2 = curl_init($url_mpsQuestions);
 
         curl_setopt($ch2, CURLOPT_POST, 1);
         curl_setopt($ch2, CURLOPT_POSTFIELDS, $messageDataSend);
